@@ -1,0 +1,64 @@
+AWS Star knot computation setup.
+
+Overall, there are three necessary pieces of code to run AWS with.
+
+1) The message generator : To generate large sets of messages 
+    that contain info for worker nodes
+
+2) The worker code : To continually run through messages 
+    and compute based on queue instructions
+    and place the results in a storage environment.
+
+3) The job code : Code that takes what is in the message 
+    to convert it to the desired output.
+
+Needed:
+
+1) An AWS queue
+2) The AWS key id
+3) The AWS secret access key
+4) An S3 bucket
+5) A region
+6) Code to run
+
+
+Usage: 
+
+    This was implemented on the Ubuntu operating system with the 
+following modules:
+1)  argparse
+2)  os
+3)  sys
+4)  boto
+5)  uuid
+6)  time
+*7) odd_point_star (for this current project)
+
+General set up:
+1) Create account
+    a) Create an AWS key id and secret access key and 
+       save each in a text file and remember the location.
+    b) Set up an AWS queue and recall the name
+    c) Create an S3 bucket and ensure sharing settings are 
+       compatible for remote use.
+    d) Create a new EC2 instance (I used an ubuntu instance)
+        i)   Install all needed software onto EC2 instance
+        ii)  Ensure that the skworker.py code is on the EC2
+             instance, and configure it to run continually 
+             while the worker is running.
+        iii) Save an image of the worker
+
+2) Create queue by running the loadqueue.py code (anywhere)
+    a) run (example): 
+        $ python loadqueue.py 5 120 200
+        Created Messages to upload...
+        Finished Creating Queue
+
+3) request instances
+    a) Use saved image from step 1diii.
+
+Run until there are no more queue messages, and if the worker 
+was configured properly, all data will be in the S3 bucket.
+
+
+
